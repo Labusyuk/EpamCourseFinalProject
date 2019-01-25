@@ -4,12 +4,21 @@
          xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd"
          version="3.1">
     <servlet>
-        <servlet-name>MainServlet</servlet-name>
-        <servlet-class>MainServlet</servlet-class>
+        <servlet-name>MainController</servlet-name>
+        <servlet-class>com.labus.bankpayments.controller.MainController</servlet-class>
     </servlet>
-
     <servlet-mapping>
-        <servlet-name>MainServlet</servlet-name>
-        <url-pattern></url-pattern>
+        <servlet-name>MainController</servlet-name>
+        <url-pattern>/*</url-pattern>
     </servlet-mapping>
+
+    <filter>
+        <filter-name>AuthFilter</filter-name>
+        <filter-class>com.labus.bankpayments.filter.GuestFilter</filter-class>
+    </filter>
+
+    <filter-mapping>
+        <filter-name>AuthFilter</filter-name>
+        <servlet-name>MainController</servlet-name>
+    </filter-mapping>
 </web-app>
