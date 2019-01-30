@@ -9,16 +9,16 @@
     </servlet>
     <servlet-mapping>
         <servlet-name>MainController</servlet-name>
-        <url-pattern>/*</url-pattern>
+        <url-pattern>/pages/*</url-pattern>
     </servlet-mapping>
-
     <filter>
-        <filter-name>AuthFilter</filter-name>
+        <filter-name>GuestFilter</filter-name>
         <filter-class>com.labus.bankpayments.filter.GuestFilter</filter-class>
     </filter>
 
     <filter-mapping>
-        <filter-name>AuthFilter</filter-name>
+        <filter-name>GuestFilter</filter-name>
         <servlet-name>MainController</servlet-name>
     </filter-mapping>
+
 </web-app>

@@ -5,6 +5,7 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.BlockingQueue;
+
 public class ConnectionPool {
 
     private static ConnectionPool poolInstance = null;
@@ -39,10 +40,11 @@ public class ConnectionPool {
         connections = new ArrayBlockingQueue<>(poolSize);
         for (int i = 0; i < poolSize; i++) {
             try {
+                DriverManager.registerDriver(new com.mysql.jdbc.Driver ());
                 Connection connection = DriverManager.getConnection(url, login, password);
-                System.out.println("ok");
+                connections.add(connection);
             } catch (SQLException e) {
-                System.out.println("Fail");
+                e.printStackTrace();
             }
         }
     }
@@ -65,6 +67,13 @@ public class ConnectionPool {
                 connection.close();
             } catch (SQLException e) {
             }
+        }
+    }
+    public void returnConnection(Connection connection){
+        try {
+            connections.put(connection);
+        } catch (InterruptedException e) {
+
         }
     }
 

@@ -10,9 +10,10 @@ import java.sql.SQLException;
 import java.util.List;
 
 public abstract class EntityDao <K, T extends Entity>  {
+    ConnectionPool pool;
     protected Connection connection = null;
     EntityDao(){
-        ConnectionPool pool = ConnectionPool.getInstance();
+        pool = ConnectionPool.getInstance();
         try {
             connection = pool.takeConnection();
             connection.setAutoCommit(false);
@@ -25,4 +26,7 @@ public abstract class EntityDao <K, T extends Entity>  {
     public abstract K create(T entity) throws DaoException;
     public abstract void update(T entity) throws DaoException;
     public abstract T retrieveEntity(ResultSet resultSet) throws DaoException;
+    public void returnConnection(Connection connection){
+        pool.returnConnection(connection);
+    }
 }

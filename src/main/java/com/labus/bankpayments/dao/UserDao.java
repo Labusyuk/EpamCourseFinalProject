@@ -96,11 +96,11 @@ public class UserDao extends EntityDao<Integer, User> {
         User user = new User();
         try{
             user.setId(resultSet.getInt("id"));
-            user.setLogin("login");
-            user.setPassword("password");
-            user.setRole(UserRole.valueOf("role"));
-            user.setName_first("name_first");
-            user.setName_last("name_last");
+            user.setLogin(resultSet.getString("login"));
+            user.setPassword(resultSet.getString("password"));
+            user.setRole(UserRole.valueOf(resultSet.getString("ROLE")));
+            user.setName_first(resultSet.getString("name_first"));
+            user.setName_last(resultSet.getString("name_last"));
         } catch (SQLException e) {
         }
         return user;
@@ -117,6 +117,8 @@ public class UserDao extends EntityDao<Integer, User> {
             }
             resultSet.close();
         } catch (SQLException e) {
+        }finally {
+            returnConnection(connection);
         }
         return user;
     }

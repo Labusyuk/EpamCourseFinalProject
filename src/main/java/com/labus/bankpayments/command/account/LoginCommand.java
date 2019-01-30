@@ -14,14 +14,14 @@ public class LoginCommand implements Command{
     public String execute(HttpServletRequest req, HttpServletResponse resp) throws CommandException {
         String login = req.getParameter("login");
         String password = req.getParameter("password");
+        System.out.println("PROG "+req.getRequestURI()+"   "+login+ "   "+password);
         User user = new UserDao().getByLogAndPass(login, String.valueOf(password.hashCode()));
         if (user == null ) {
             req.getSession().setAttribute("message", "login_error");
-            return "login";
+            return "default";
         }
         req.getSession().setAttribute("user", user);
         req.getSession().setAttribute("role", user.getRole());
-        req.getSession().setAttribute("password", password);
         return "user";
     }
 }

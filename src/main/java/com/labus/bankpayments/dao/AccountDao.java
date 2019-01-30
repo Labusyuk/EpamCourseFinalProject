@@ -62,18 +62,21 @@ public class AccountDao extends EntityDao<Integer, Account> {
         return account;
     }
 
-    public Account getByOwner(String owner) throws DaoException {
-        Account account = null;
+    public List<Account> getByOwner(String owner) throws DaoException {
+        List<Account> accounts = new ArrayList<>();
         try (PreparedStatement statement = connection.prepareStatement(SELECT_BY_OWNER)) {
             statement.setString(1, owner);
             ResultSet resultSet = statement.executeQuery();
-            if (resultSet.next()) {
-                account = retrieveEntity(resultSet);
+            while (resultSet.next()) {
+                Account account = retrieveEntity(resultSet);
+                accounts.add(account);
             }
             resultSet.close();
         } catch (SQLException e) {
-        }
-        return account;
+        }finally {
+        returnConnection(connection);
+    }
+        return accounts;
     }
 
     @Override
