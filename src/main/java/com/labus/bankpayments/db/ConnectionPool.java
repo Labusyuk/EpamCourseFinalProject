@@ -29,7 +29,7 @@ public class ConnectionPool {
     }
 
     private ConnectionPool() {
-        this.poolSize = 3;
+        this.poolSize = 10;
         this.url = "jdbc:mysql://localhost:3306/bankschema?serverTimezone=UTC";
         this.login = "root";
         this.password = "4844vtl";

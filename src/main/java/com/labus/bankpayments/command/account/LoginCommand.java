@@ -14,7 +14,8 @@ public class LoginCommand implements Command{
     public String execute(HttpServletRequest req, HttpServletResponse resp) throws CommandException {
         String login = req.getParameter("login");
         String password = req.getParameter("password");
-        System.out.println("PROG "+req.getRequestURI()+"   "+login+ "   "+password);
+       if(login == null || password == null)
+            return "login";
         User user = new UserDao().getByLogAndPass(login, String.valueOf(password.hashCode()));
         if (user == null ) {
             req.getSession().setAttribute("message", "login_error");

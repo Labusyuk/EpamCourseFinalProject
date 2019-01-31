@@ -30,6 +30,8 @@ public class AccountDao extends EntityDao<Integer, Account> {
             }
             resultSet.close();
         } catch (SQLException e) {
+        }finally {
+            returnConnection(connection);
         }
         return accounts;
     }
@@ -45,6 +47,8 @@ public class AccountDao extends EntityDao<Integer, Account> {
             }
             resultSet.close();
         } catch (SQLException e) {
+        }finally {
+            returnConnection(connection);
         }
         return account;
     }
@@ -58,6 +62,8 @@ public class AccountDao extends EntityDao<Integer, Account> {
             }
             resultSet.close();
         } catch (SQLException e) {
+        }finally {
+            returnConnection(connection);
         }
         return account;
     }
@@ -85,6 +91,8 @@ public class AccountDao extends EntityDao<Integer, Account> {
             statement.setInt(1, id);
             statement.executeUpdate();
         } catch (SQLException e) {
+        }finally {
+            returnConnection(connection);
         }
     }
 
@@ -105,20 +113,26 @@ public class AccountDao extends EntityDao<Integer, Account> {
             }
             generatedKey.close();
         } catch (SQLException e) {
+        }finally {
+            returnConnection(connection);
         }
         return idAccount;
     }
 
     @Override
     public void update(Account account) throws DaoException {
-        try (
-                PreparedStatement statement = connection.prepareStatement(UPDATE_BALANCE)) {
-            statement.setString(1, String.valueOf(account.getBalance()));
-            statement.setString(2, String.valueOf(account.getNumber()));
-            statement.executeUpdate();
-        } catch (SQLException e) {
-        }
+            try (
+                    PreparedStatement statement = connection.prepareStatement(UPDATE_BALANCE)) {
+                statement.setString(1, String.valueOf(account.getBalance()));
+                statement.setString(2, String.valueOf(account.getNumber()));
+                statement.executeUpdate();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            } finally {
+                returnConnection(connection);
+            }
     }
+
 
     @Override
     public Account retrieveEntity(ResultSet resultSet) throws DaoException {

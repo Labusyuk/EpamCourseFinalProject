@@ -30,6 +30,8 @@ public class DepositeDao extends EntityDao<Integer,Deposite> {
                 deposites.add(deposite);
             }
         } catch (SQLException e) {
+        }finally {
+            returnConnection(connection);
         }
         return deposites;
     }
@@ -45,6 +47,8 @@ public class DepositeDao extends EntityDao<Integer,Deposite> {
             }
             resultSet.close();
         } catch (SQLException e) {
+        }finally {
+            returnConnection(connection);
         }
         return deposite;
     }
@@ -55,6 +59,8 @@ public class DepositeDao extends EntityDao<Integer,Deposite> {
             statement.setInt(1, id);
             statement.executeUpdate();
         } catch (SQLException e) {
+        }finally {
+            returnConnection(connection);
         }
     }
 
@@ -72,6 +78,8 @@ public class DepositeDao extends EntityDao<Integer,Deposite> {
             }
             generatedKey.close();
         } catch (SQLException e) {
+        }finally {
+            returnConnection(connection);
         }
         return idDeposite;
     }
@@ -84,6 +92,8 @@ public class DepositeDao extends EntityDao<Integer,Deposite> {
             statement.setString(2, String.valueOf(deposite.getAccount_number()));
             statement.executeUpdate();
         } catch (SQLException e) {
+        }finally {
+            returnConnection(connection);
         }
     }
     public Deposite getByNumber(Long number) throws DaoException {
@@ -96,6 +106,8 @@ public class DepositeDao extends EntityDao<Integer,Deposite> {
             }
             resultSet.close();
         } catch (SQLException e) {
+        }finally {
+            returnConnection(connection);
         }
         return deposite;
 

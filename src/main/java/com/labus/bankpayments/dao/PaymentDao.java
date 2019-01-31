@@ -13,11 +13,11 @@ import java.util.List;
 public class PaymentDao extends EntityDao<Integer,Payment> {
 
     private final static String INSERT_PAYMENT= "INSERT INTO bankschema.payments (account_number, to, actions, amount, description, date) VALUES (?, ?, ?, ?, ?, ?)";
-    private final static String SELECT_ALL = "SELECT id, account_number, to, actions, amount, description, date FROM bankschema.payments";
-    private final static String SELECT_BY_ID = "SELECT id, account_number, to, actions, amount, description, date FROM bankschema.payments WHERE id=?";
+    private final static String SELECT_ALL = "SELECT id, account_number, `to`, actions, amount, description, date FROM bankschema.payments";
+    private final static String SELECT_BY_ID = "SELECT id, account_number, `to`, actions, amount, description, date FROM bankschema.payments WHERE id=?";
     private final static String DELETE_BY_ID = "DELETE FROM bankschema.payments WHERE id=?";
-    private final static String SELECT_BY_ACCNUMBER = "SELECT id, account_number, to, actions, amount, description, date FROM bankschema.payments WHERE account_number=?";
-    private final static String SELECT_BY_TO = "SELECT id, account_number, to, actions, amount, description, date FROM bankschema.payments WHERE to=?";
+    private final static String SELECT_BY_ACCNUMBER = "SELECT id, account_number, `to`, actions, amount, description, `date` FROM bankschema.payments WHERE account_number=? OR `to`=?";
+    private final static String SELECT_BY_TO = "SELECT id, account_number, `to`, actions, amount, description, date FROM bankschema.payments WHERE to=?";
 
 
     @Override
@@ -32,6 +32,8 @@ public class PaymentDao extends EntityDao<Integer,Payment> {
             }
             resultSet.close();
         } catch (SQLException e) {
+        }finally {
+            returnConnection(connection);
         }
         return payments;
     }
@@ -47,36 +49,29 @@ public class PaymentDao extends EntityDao<Integer,Payment> {
             }
             resultSet.close();
         } catch (SQLException e) {
+        }finally {
+            returnConnection(connection);
         }
         return payment;
     }
 
-    public Payment getByNumber(long number) throws DaoException {
+    public List<Payment> getByNumber(long number) throws DaoException {
+        List<Payment> payments = new ArrayList<>();
         Payment payment = null;
         try (PreparedStatement statement = connection.prepareStatement(SELECT_BY_ACCNUMBER)) {
             statement.setLong(1, number);
+            statement.setLong(2, number);
             ResultSet resultSet = statement.executeQuery();
-            if (resultSet.next()) {
+            while (resultSet.next()) {
                 payment = retrieveEntity(resultSet);
+                payments.add(payment);
             }
             resultSet.close();
         } catch (SQLException e) {
+        }finally {
+            returnConnection(connection);
         }
-        return payment;
-    }
-
-    public Payment getByTo(long to) throws DaoException {
-        Payment payment = null;
-        try (PreparedStatement statement = connection.prepareStatement(SELECT_BY_TO)) {
-            statement.setLong(1, to);
-            ResultSet resultSet = statement.executeQuery();
-            if (resultSet.next()) {
-                payment = retrieveEntity(resultSet);
-            }
-            resultSet.close();
-        } catch (SQLException e) {
-        }
-        return payment;
+        return payments;
     }
 
 
@@ -86,6 +81,8 @@ public class PaymentDao extends EntityDao<Integer,Payment> {
             statement.setInt(1, id);
             statement.executeUpdate();
         } catch (SQLException e) {
+        }finally {
+            returnConnection(connection);
         }
     }
 
@@ -107,6 +104,8 @@ public class PaymentDao extends EntityDao<Integer,Payment> {
             }
             generatedKey.close();
         } catch (SQLException e) {
+        }finally {
+            returnConnection(connection);
         }
         return idPayment;
     }
@@ -121,14 +120,16 @@ public class PaymentDao extends EntityDao<Integer,Payment> {
         Payment payment = new Payment();
         try{
             payment.setId(resultSet.getInt("id"));
-            payment.setAccount_number(resultSet.getInt("account_number"));
+            payment.setAccount_number(resultSet.getLong("account_number"));
             payment.setTo(resultSet.getLong("to"));
             payment.setActions(resultSet.getByte("actions"));
             payment.setAmount(resultSet.getLong("amount"));
             payment.setDescription(resultSet.getString("description"));
             payment.setDate(resultSet.getDate("date"));
         } catch (SQLException e) {
+            e.printStackTrace();
         }
+
         return payment;
     }
 }

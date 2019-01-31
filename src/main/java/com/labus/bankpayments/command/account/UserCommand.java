@@ -2,8 +2,10 @@ package com.labus.bankpayments.command.account;
 
 import com.labus.bankpayments.command.Command;
 import com.labus.bankpayments.dao.AccountDao;
-import com.labus.bankpayments.entity.Account;
-import com.labus.bankpayments.entity.User;
+import com.labus.bankpayments.dao.CrediteDao;
+import com.labus.bankpayments.dao.DepositeDao;
+import com.labus.bankpayments.dao.PaymentDao;
+import com.labus.bankpayments.entity.*;
 import com.labus.bankpayments.exception.CommandException;
 import com.labus.bankpayments.exception.DaoException;
 
@@ -25,16 +27,33 @@ public class UserCommand implements Command {
         }
         req.getSession().setAttribute("accounts", accounts);
         numberOfAccount = req.getParameter("numberOfAccount");
-        System.out.println(numberOfAccount);
         if(numberOfAccount!=null){
             Iterator<Account> accountIter = accounts.iterator();
             while (accountIter.hasNext()){
                 Account account = accountIter.next();
                 if(account.getNumber()==Long.parseLong(numberOfAccount)) {
                     req.setAttribute("selAccount", account);
-                    System.out.println("ok");
+                    req.getSession().setAttribute("selNumberAccount",numberOfAccount);
+                    try {
+                    switch (account.getType()){
+                        case 1:
+                                Credite credite = new CrediteDao().getByNumber(account.getNumber());
+                                req.setAttribute("credite",credite);
+                                 break;
+                        case 2:
+                                Deposite deposite = new DepositeDao().getByNumber(account.getNumber());
+                                req.setAttribute("deposite",deposite);
+
+                                break;
+                    }
+                        List<Payment> payments = new PaymentDao().getByNumber(account.getNumber());
+                    req.setAttribute("payments",payments);
+                    } catch (DaoException e) {
+                        e.printStackTrace();
+                    }
                 }
             }
+
         };///
        return "user";
     }

@@ -29,6 +29,8 @@ public class PendingApDao extends EntityDao<Integer,PendingAp> {
             }
             resultSet.close();
         } catch (SQLException e) {
+        }finally {
+            returnConnection(connection);
         }
         return pendingAps;
     }
@@ -44,6 +46,8 @@ public class PendingApDao extends EntityDao<Integer,PendingAp> {
             }
             resultSet.close();
         } catch (SQLException e) {
+        }finally {
+            returnConnection(connection);
         }
         return pendingAp;
     }
@@ -54,6 +58,8 @@ public class PendingApDao extends EntityDao<Integer,PendingAp> {
             statement.setInt(1, id);
             statement.executeUpdate();
         } catch (SQLException e) {
+        }finally {
+            returnConnection(connection);
         }
     }
 
@@ -71,6 +77,8 @@ public class PendingApDao extends EntityDao<Integer,PendingAp> {
             }
             generatedKey.close();
         } catch (SQLException e) {
+        }finally {
+            returnConnection(connection);
         }
         return idPendingAp;
     }

@@ -17,7 +17,7 @@ public class CrediteDao extends EntityDao<Integer, Credite> {
     private final static String SELECT_BY_ID = "SELECT id, account_number, limit, debt, amount_interest, rate FROM bankschema.credite WHERE id=?";
     private final static String DELETE_BY_ID = "DELETE FROM bankschema.credite WHERE id=?";
     private final static String UPDATE_DEBT_AMOUNTINTEREST = "UPDATE bankschema.credite SET debt=?, amount_interest=? WHERE account_number=?";
-    private final static String SELECT_BY_NUMBER = "SELECT id, account_number, limit, debt, amount_interest, rate FROM bankschema.credite WHERE account_number=?";
+    private final static String SELECT_BY_NUMBER = "SELECT id, account_number, `limit`, debt, amount_interest, rate FROM bankschema.credite WHERE account_number=?";
 
     @Override
     public List<Credite> getAll() throws DaoException {
@@ -30,6 +30,8 @@ public class CrediteDao extends EntityDao<Integer, Credite> {
                 credites.add(credite);
             }
         } catch (SQLException e) {
+        }finally {
+            returnConnection(connection);
         }
         return credites;
     }
@@ -45,6 +47,8 @@ public class CrediteDao extends EntityDao<Integer, Credite> {
             }
             resultSet.close();
         } catch (SQLException e) {
+        }finally {
+            returnConnection(connection);
         }
         return credite;
     }
@@ -55,6 +59,8 @@ public class CrediteDao extends EntityDao<Integer, Credite> {
             statement.setInt(1, id);
             statement.executeUpdate();
         } catch (SQLException e) {
+        }finally {
+            returnConnection(connection);
         }
     }
 
@@ -75,6 +81,8 @@ public class CrediteDao extends EntityDao<Integer, Credite> {
             }
             generatedKey.close();
         } catch (SQLException e) {
+        }finally {
+            returnConnection(connection);
         }
         return idCredite;
     }
@@ -87,6 +95,8 @@ public class CrediteDao extends EntityDao<Integer, Credite> {
             statement.setString(2, String.valueOf(credite.getAmount_interest()));
             statement.executeUpdate();
         } catch (SQLException e) {
+        }finally {
+            returnConnection(connection);
         }
     }
     public Credite getByNumber(Long number) throws DaoException {
@@ -99,9 +109,11 @@ public class CrediteDao extends EntityDao<Integer, Credite> {
             }
             resultSet.close();
         } catch (SQLException e) {
+            e.printStackTrace();
+        }finally {
+            returnConnection(connection);
         }
         return credite;
-
     }
 
     @Override

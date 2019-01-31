@@ -58,7 +58,15 @@ VALUES ('5168755428075126', '0', 'Labusyuk','35000','30-10-2024'),
 
 INSERT INTO `bankschema`.`credite` (`account_number`, `limit`, `debt`,`amount_interest`,`rate`)
 VALUES ('5218863124315621', '25000', '12450','249','2'),
-VALUES ('5211453444272186', '100000', '50000','2500','5');
+('5211453444272186', '100000', '50000','2500','5');
 
-INSERT INTO `bankschema`.`credite` (`account_number`, `rate`)
+INSERT INTO `bankschema`.`deposite` (`account_number`, `rate`)
 VALUES ('5118753421277686', '15');
+
+INSERT INTO `bankschema`.`payments` (`account_number`, `to`, `actions`, `amount`, `description`, `date`)
+('5218863124315621', '5118753421277686' , 'transaction', '50' , 'Остаток: 530 грн.', 'Thu Jan 31 14:40:00 EET 2019'),
+('5118753421277686', '5218863124315621' , 'transaction', '50' , 'Остаток: 580 грн.', 'Wed Jan 30 16:18:00 EET 2019'),
+('5218863124315621', '1' , 'utilities', '1500' , 'Остаток: 530 грн.', 'Wed Jan 30 16:18:00 EET 2019'),
+('5168755428075126', '1' , 'transaction', '2030' , 'Остаток: 2030 грн.', 'Wed Jan 30 16:18:00 EET 2019');
+
+Пополнения 50 грн с карты 5118 7534 2127 7686. Баланс: 580 грн.

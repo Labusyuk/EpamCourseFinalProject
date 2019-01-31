@@ -60,4 +60,8 @@ public class Account extends Entity {
     public void setValidity(Date validity) {
         this.validity = validity;
     }
+
+    public void updateBalance(Long amount){
+        balance+=amount;
+    }
 }

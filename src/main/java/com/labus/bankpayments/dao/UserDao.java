@@ -27,6 +27,8 @@ public class UserDao extends EntityDao<Integer, User> {
                 users.add(user);
             }
         } catch (SQLException e) {
+        }finally {
+            returnConnection(connection);
         }
         return users;
     }
@@ -43,6 +45,8 @@ public class UserDao extends EntityDao<Integer, User> {
             resultSet.close();
         } catch (SQLException e) {
             throw new DaoException();
+        }finally {
+            returnConnection(connection);
         }
         return user;
     }
@@ -54,6 +58,8 @@ public class UserDao extends EntityDao<Integer, User> {
             statement.setInt(1, id);
             statement.executeUpdate();
         } catch (SQLException e) {
+        }finally {
+            returnConnection(connection);
         }
     }
 
@@ -74,6 +80,8 @@ public class UserDao extends EntityDao<Integer, User> {
             }
             generatedKey.close();
         } catch (SQLException e) {
+        }finally {
+            returnConnection(connection);
         }
         return idUser;
     }
@@ -89,6 +97,8 @@ public class UserDao extends EntityDao<Integer, User> {
             statement.setString(5, user.getLogin());
             statement.executeUpdate();
         } catch (SQLException e) {
+        }finally {
+            returnConnection(connection);
         }
     }
 

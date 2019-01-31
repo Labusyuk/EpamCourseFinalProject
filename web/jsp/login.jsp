@@ -2,8 +2,6 @@
 <html>
 <head>
     <title>Вхід</title>
-    <link rel="icon" href="http://vladmaxi.net/favicon.ico" type="image/x-icon">
-    <link rel="shortcut icon" href="http://vladmaxi.net/favicon.ico" type="image/x-icon">
 </head>
 <body>
 <div style="text-align: center;"><font size="4" style="font-size: 14pt;"><b>Войдите в систему</b></font></div>

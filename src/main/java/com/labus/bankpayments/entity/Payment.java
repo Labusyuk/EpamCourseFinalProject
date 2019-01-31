@@ -13,7 +13,7 @@ private Date date;
     public Payment() {
     }
 
-    public Payment(int id, long account_number, byte actions, long amount, String description, Date date) {
+    public Payment(int id, long account_number, long to, byte actions, long amount, String description, Date date) {
         super(id);
         this.account_number = account_number;
         this.to = to;
