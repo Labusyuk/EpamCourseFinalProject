@@ -2,6 +2,7 @@ package com.labus.bankpayments.dao;
 
 import com.labus.bankpayments.entity.PendingAp;
 import com.labus.bankpayments.exception.DaoException;
+import org.apache.log4j.Level;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -29,6 +30,7 @@ public class PendingApDao extends EntityDao<Integer,PendingAp> {
             }
             resultSet.close();
         } catch (SQLException e) {
+            logger.log(Level.ERROR, e.getMessage());
         }finally {
             returnConnection(connection);
         }
@@ -46,6 +48,7 @@ public class PendingApDao extends EntityDao<Integer,PendingAp> {
             }
             resultSet.close();
         } catch (SQLException e) {
+            logger.log(Level.ERROR, e.getMessage());
         }finally {
             returnConnection(connection);
         }
@@ -58,6 +61,7 @@ public class PendingApDao extends EntityDao<Integer,PendingAp> {
             statement.setInt(1, id);
             statement.executeUpdate();
         } catch (SQLException e) {
+            logger.log(Level.ERROR, e.getMessage());
         }finally {
             returnConnection(connection);
         }
@@ -77,6 +81,7 @@ public class PendingApDao extends EntityDao<Integer,PendingAp> {
             }
             generatedKey.close();
         } catch (SQLException e) {
+            logger.log(Level.ERROR, e.getMessage());
         }finally {
             returnConnection(connection);
         }
@@ -96,6 +101,7 @@ public class PendingApDao extends EntityDao<Integer,PendingAp> {
             pendingAp.setLogin(resultSet.getString("login"));
             pendingAp.setDate(resultSet.getDate("date"));
         } catch (SQLException e) {
+            logger.log(Level.ERROR, e.getMessage());
         }
         return pendingAp;
     }

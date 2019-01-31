@@ -2,6 +2,7 @@ package com.labus.bankpayments.dao;
 
 import com.labus.bankpayments.entity.Payment;
 import com.labus.bankpayments.exception.DaoException;
+import org.apache.log4j.Level;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -32,6 +33,7 @@ public class PaymentDao extends EntityDao<Integer,Payment> {
             }
             resultSet.close();
         } catch (SQLException e) {
+            logger.log(Level.ERROR, e.getMessage());
         }finally {
             returnConnection(connection);
         }
@@ -49,6 +51,7 @@ public class PaymentDao extends EntityDao<Integer,Payment> {
             }
             resultSet.close();
         } catch (SQLException e) {
+            logger.log(Level.ERROR, e.getMessage());
         }finally {
             returnConnection(connection);
         }
@@ -68,6 +71,7 @@ public class PaymentDao extends EntityDao<Integer,Payment> {
             }
             resultSet.close();
         } catch (SQLException e) {
+            logger.log(Level.ERROR, e.getMessage());
         }finally {
             returnConnection(connection);
         }
@@ -81,6 +85,7 @@ public class PaymentDao extends EntityDao<Integer,Payment> {
             statement.setInt(1, id);
             statement.executeUpdate();
         } catch (SQLException e) {
+            logger.log(Level.ERROR, e.getMessage());
         }finally {
             returnConnection(connection);
         }
@@ -104,6 +109,7 @@ public class PaymentDao extends EntityDao<Integer,Payment> {
             }
             generatedKey.close();
         } catch (SQLException e) {
+            logger.log(Level.ERROR, e.getMessage());
         }finally {
             returnConnection(connection);
         }
@@ -112,7 +118,7 @@ public class PaymentDao extends EntityDao<Integer,Payment> {
 
     @Override
     public void update(Payment entity) throws DaoException {
-        System.out.println("error");
+        logger.log(Level.ERROR, "Информацию о платежах запрещенно изменять");
     }
 
     @Override
@@ -127,7 +133,7 @@ public class PaymentDao extends EntityDao<Integer,Payment> {
             payment.setDescription(resultSet.getString("description"));
             payment.setDate(resultSet.getDate("date"));
         } catch (SQLException e) {
-            e.printStackTrace();
+            logger.log(Level.ERROR, e.getMessage());
         }
 
         return payment;

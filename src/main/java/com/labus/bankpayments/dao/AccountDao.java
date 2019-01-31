@@ -2,6 +2,7 @@ package com.labus.bankpayments.dao;
 
 import com.labus.bankpayments.entity.Account;
 import com.labus.bankpayments.exception.DaoException;
+import org.apache.log4j.Level;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -30,6 +31,7 @@ public class AccountDao extends EntityDao<Integer, Account> {
             }
             resultSet.close();
         } catch (SQLException e) {
+            logger.log(Level.ERROR, e.getMessage());
         }finally {
             returnConnection(connection);
         }
@@ -47,6 +49,7 @@ public class AccountDao extends EntityDao<Integer, Account> {
             }
             resultSet.close();
         } catch (SQLException e) {
+            logger.log(Level.ERROR, e.getMessage());
         }finally {
             returnConnection(connection);
         }
@@ -62,6 +65,7 @@ public class AccountDao extends EntityDao<Integer, Account> {
             }
             resultSet.close();
         } catch (SQLException e) {
+            logger.log(Level.ERROR, e.getMessage());
         }finally {
             returnConnection(connection);
         }
@@ -79,6 +83,7 @@ public class AccountDao extends EntityDao<Integer, Account> {
             }
             resultSet.close();
         } catch (SQLException e) {
+            logger.log(Level.ERROR, e.getMessage());
         }finally {
         returnConnection(connection);
     }
@@ -91,6 +96,7 @@ public class AccountDao extends EntityDao<Integer, Account> {
             statement.setInt(1, id);
             statement.executeUpdate();
         } catch (SQLException e) {
+            logger.log(Level.ERROR, e.getMessage());
         }finally {
             returnConnection(connection);
         }
@@ -113,6 +119,7 @@ public class AccountDao extends EntityDao<Integer, Account> {
             }
             generatedKey.close();
         } catch (SQLException e) {
+            logger.log(Level.ERROR, e.getMessage());
         }finally {
             returnConnection(connection);
         }
@@ -127,7 +134,7 @@ public class AccountDao extends EntityDao<Integer, Account> {
                 statement.setString(2, String.valueOf(account.getNumber()));
                 statement.executeUpdate();
             } catch (SQLException e) {
-                e.printStackTrace();
+                logger.log(Level.ERROR, e.getMessage());
             } finally {
                 returnConnection(connection);
             }
@@ -145,6 +152,7 @@ public class AccountDao extends EntityDao<Integer, Account> {
             account.setBalance(resultSet.getLong("balance"));
             account.setValidity(resultSet.getDate("validity"));
         } catch (SQLException e) {
+            logger.log(Level.ERROR, e.getMessage());
         }
         return account;
     }
