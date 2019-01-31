@@ -2,7 +2,7 @@ package com.labus.bankpayments.dao;
 
 import com.labus.bankpayments.entity.Deposite;
 import com.labus.bankpayments.exception.DaoException;
-import org.apache.log4j.Level;
+import org.apache.log4j.Logger;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -20,6 +20,7 @@ public class DepositeDao extends EntityDao<Integer,Deposite> {
     private final static String UPDATE_RATE = "UPDATE bankschema.deposite SET rate=? WHERE account_number=?";
     private final static String SELECT_BY_NUMBER = "SELECT id, account_number, rate FROM bankschema.deposite WHERE account_number=?";
 
+    private static Logger logger=Logger.getLogger(String.valueOf(DepositeDao.class));
     @Override
     public List<Deposite> getAll() throws DaoException {
         List<Deposite> deposites = new ArrayList<>();
@@ -31,7 +32,7 @@ public class DepositeDao extends EntityDao<Integer,Deposite> {
                 deposites.add(deposite);
             }
         } catch (SQLException e) {
-            logger.log(Level.ERROR, e.getMessage());
+            logger.error(e.getMessage());
         }finally {
             returnConnection(connection);
         }
@@ -49,7 +50,7 @@ public class DepositeDao extends EntityDao<Integer,Deposite> {
             }
             resultSet.close();
         } catch (SQLException e) {
-            logger.log(Level.ERROR, e.getMessage());
+            logger.error(e.getMessage());
         }finally {
             returnConnection(connection);
         }
@@ -62,7 +63,7 @@ public class DepositeDao extends EntityDao<Integer,Deposite> {
             statement.setInt(1, id);
             statement.executeUpdate();
         } catch (SQLException e) {
-            logger.log(Level.ERROR, e.getMessage());
+            logger.error(e.getMessage());
         }finally {
             returnConnection(connection);
         }
@@ -82,7 +83,7 @@ public class DepositeDao extends EntityDao<Integer,Deposite> {
             }
             generatedKey.close();
         } catch (SQLException e) {
-            logger.log(Level.ERROR, e.getMessage());
+            logger.error(e.getMessage());
         }finally {
             returnConnection(connection);
         }
@@ -97,7 +98,7 @@ public class DepositeDao extends EntityDao<Integer,Deposite> {
             statement.setString(2, String.valueOf(deposite.getAccount_number()));
             statement.executeUpdate();
         } catch (SQLException e) {
-            logger.log(Level.ERROR, e.getMessage());
+            logger.error(e.getMessage());
         }finally {
             returnConnection(connection);
         }
@@ -112,7 +113,7 @@ public class DepositeDao extends EntityDao<Integer,Deposite> {
             }
             resultSet.close();
         } catch (SQLException e) {
-            logger.log(Level.ERROR, e.getMessage());
+            logger.error(e.getMessage());
         }finally {
             returnConnection(connection);
         }
@@ -128,7 +129,7 @@ public class DepositeDao extends EntityDao<Integer,Deposite> {
             deposite.setAccount_number(resultSet.getLong("account_number"));
             deposite.setRate(resultSet.getShort("rate"));
         } catch (SQLException e) {
-            logger.log(Level.ERROR, e.getMessage());
+            logger.error(e.getMessage());
         }
         return deposite;
     }

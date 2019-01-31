@@ -2,8 +2,10 @@ package com.labus.bankpayments.controller;
 
 import com.labus.bankpayments.command.Command;
 import com.labus.bankpayments.command.CommandFactory;
+import com.labus.bankpayments.command.account.LoginCommand;
 import com.labus.bankpayments.db.ConnectionPool;
 import com.labus.bankpayments.exception.CommandException;
+import org.apache.log4j.Logger;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;

@@ -9,6 +9,8 @@ import javax.servlet.http.HttpServletResponse;
 public class LogoutCommand implements Command {
     @Override
     public String execute(HttpServletRequest req, HttpServletResponse resp) throws CommandException {
-        return null;
+        req.getSession().removeAttribute("user");
+        req.getSession().removeAttribute("role");
+        return "login";
     }
 }

@@ -1,7 +1,9 @@
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page import="java.text.SimpleDateFormat" %>
+<%@ page contentType="text/html; charset=UTF-8" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html>
 <head>
-    <title>Вхід</title>
+    <title>Вход</title>
 </head>
 <body>
 <div style="text-align: center;"><font size="4" style="font-size: 14pt;"><b>Войдите в систему</b></font></div>
@@ -17,8 +19,9 @@
     </p>
 
     <p class="login-submit" style="text-align: center;">
-            <input type="submit" value="Войти" />
+            <input type="submit" value="Войти" /><br>
     </p>
+    <div style="text-align: center;">${message}</div>
 </form>
 </body>
 </html>

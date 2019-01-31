@@ -21,4 +21,8 @@
         <servlet-name>MainController</servlet-name>
     </filter-mapping>
 
+    <listener>
+        <listener-class>com.labus.bankpayments.listener.Log4jInit</listener-class>
+    </listener>
+
 </web-app>

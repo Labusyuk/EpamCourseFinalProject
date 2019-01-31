@@ -3,7 +3,7 @@ package com.labus.bankpayments.dao;
 import com.labus.bankpayments.entity.User;
 import com.labus.bankpayments.entity.UserRole;
 import com.labus.bankpayments.exception.DaoException;
-import org.apache.log4j.Level;
+import org.apache.log4j.Logger;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -17,6 +17,7 @@ public class UserDao extends EntityDao<Integer, User> {
     private final static String DELETE_BY_ID = "DELETE FROM bankschema.users WHERE id=?";
     private final static String UPDATE_BY_LOGIN = "UPDATE bankschema.users SET password=?, role=?, name_first=?, name_last=? WHERE login=?";
 
+    private static Logger logger=Logger.getLogger(String.valueOf(UserDao.class));
     @Override
     public List<User> getAll() throws DaoException {
         List<User> users = new ArrayList<>();
@@ -28,7 +29,7 @@ public class UserDao extends EntityDao<Integer, User> {
                 users.add(user);
             }
         } catch (SQLException e) {
-            logger.log(Level.ERROR, e.getMessage());
+            logger.error(e.getMessage());
         }finally {
             returnConnection(connection);
         }
@@ -46,7 +47,7 @@ public class UserDao extends EntityDao<Integer, User> {
             }
             resultSet.close();
         } catch (SQLException e) {
-            logger.log(Level.ERROR, e.getMessage());
+            logger.error(e.getMessage());
         }finally {
             returnConnection(connection);
         }
@@ -60,7 +61,7 @@ public class UserDao extends EntityDao<Integer, User> {
             statement.setInt(1, id);
             statement.executeUpdate();
         } catch (SQLException e) {
-            logger.log(Level.ERROR, e.getMessage());
+            logger.error(e.getMessage());
         }finally {
             returnConnection(connection);
         }
@@ -83,7 +84,7 @@ public class UserDao extends EntityDao<Integer, User> {
             }
             generatedKey.close();
         } catch (SQLException e) {
-            logger.log(Level.ERROR, e.getMessage());
+            logger.error(e.getMessage());
         }finally {
             returnConnection(connection);
         }
@@ -101,7 +102,7 @@ public class UserDao extends EntityDao<Integer, User> {
             statement.setString(5, user.getLogin());
             statement.executeUpdate();
         } catch (SQLException e) {
-            logger.log(Level.ERROR, e.getMessage());
+            logger.error(e.getMessage());
         }finally {
             returnConnection(connection);
         }
@@ -117,7 +118,7 @@ public class UserDao extends EntityDao<Integer, User> {
             user.setName_first(resultSet.getString("name_first"));
             user.setName_last(resultSet.getString("name_last"));
         } catch (SQLException e) {
-            logger.log(Level.ERROR, e.getMessage());
+            logger.error(e.getMessage());
         }
         return user;
     }
@@ -133,7 +134,7 @@ public class UserDao extends EntityDao<Integer, User> {
             }
             resultSet.close();
         } catch (SQLException e) {
-            logger.log(Level.ERROR, e.getMessage());
+            logger.error(e.getMessage());
         }finally {
             returnConnection(connection);
         }

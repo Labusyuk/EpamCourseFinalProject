@@ -2,7 +2,7 @@ package com.labus.bankpayments.dao;
 
 import com.labus.bankpayments.entity.Account;
 import com.labus.bankpayments.exception.DaoException;
-import org.apache.log4j.Level;
+import org.apache.log4j.Logger;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -18,7 +18,7 @@ public class AccountDao extends EntityDao<Integer, Account> {
     private final static String SELECT_BY_NUMBER = "SELECT id, number, type, owner, balance, validity FROM bankschema.accounts WHERE number=?";
     private final static String SELECT_BY_OWNER = "SELECT id, number, type, owner, balance, validity FROM bankschema.accounts WHERE owner=?";
 
-
+    private static Logger logger=Logger.getLogger(String.valueOf(AccountDao.class));
     @Override
     public List<Account> getAll() throws DaoException {
         List<Account> accounts = new ArrayList<>();
@@ -31,7 +31,7 @@ public class AccountDao extends EntityDao<Integer, Account> {
             }
             resultSet.close();
         } catch (SQLException e) {
-            logger.log(Level.ERROR, e.getMessage());
+            logger.error(e.getMessage());
         }finally {
             returnConnection(connection);
         }
@@ -49,7 +49,7 @@ public class AccountDao extends EntityDao<Integer, Account> {
             }
             resultSet.close();
         } catch (SQLException e) {
-            logger.log(Level.ERROR, e.getMessage());
+            logger.error(e.getMessage());
         }finally {
             returnConnection(connection);
         }
@@ -65,7 +65,7 @@ public class AccountDao extends EntityDao<Integer, Account> {
             }
             resultSet.close();
         } catch (SQLException e) {
-            logger.log(Level.ERROR, e.getMessage());
+            logger.error(e.getMessage());
         }finally {
             returnConnection(connection);
         }
@@ -83,7 +83,7 @@ public class AccountDao extends EntityDao<Integer, Account> {
             }
             resultSet.close();
         } catch (SQLException e) {
-            logger.log(Level.ERROR, e.getMessage());
+            logger.error(e.getMessage());
         }finally {
         returnConnection(connection);
     }
@@ -96,7 +96,7 @@ public class AccountDao extends EntityDao<Integer, Account> {
             statement.setInt(1, id);
             statement.executeUpdate();
         } catch (SQLException e) {
-            logger.log(Level.ERROR, e.getMessage());
+            logger.error(e.getMessage());
         }finally {
             returnConnection(connection);
         }
@@ -119,7 +119,7 @@ public class AccountDao extends EntityDao<Integer, Account> {
             }
             generatedKey.close();
         } catch (SQLException e) {
-            logger.log(Level.ERROR, e.getMessage());
+            logger.error(e.getMessage());
         }finally {
             returnConnection(connection);
         }
@@ -134,7 +134,7 @@ public class AccountDao extends EntityDao<Integer, Account> {
                 statement.setString(2, String.valueOf(account.getNumber()));
                 statement.executeUpdate();
             } catch (SQLException e) {
-                logger.log(Level.ERROR, e.getMessage());
+                logger.error(e.getMessage());
             } finally {
                 returnConnection(connection);
             }
@@ -152,7 +152,7 @@ public class AccountDao extends EntityDao<Integer, Account> {
             account.setBalance(resultSet.getLong("balance"));
             account.setValidity(resultSet.getDate("validity"));
         } catch (SQLException e) {
-            logger.log(Level.ERROR, e.getMessage());
+            logger.error(e.getMessage());
         }
         return account;
     }

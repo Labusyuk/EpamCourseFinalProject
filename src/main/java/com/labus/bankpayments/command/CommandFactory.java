@@ -1,9 +1,6 @@
 package com.labus.bankpayments.command;
 
-import com.labus.bankpayments.command.account.DefaultCommand;
-import com.labus.bankpayments.command.account.LoginCommand;
-import com.labus.bankpayments.command.account.TransactionCommand;
-import com.labus.bankpayments.command.account.UserCommand;
+import com.labus.bankpayments.command.account.*;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
@@ -17,7 +14,7 @@ public class CommandFactory {
         commandsMap.put("/login", new LoginCommand());
         commandsMap.put("/user", new UserCommand());
         commandsMap.put("/admin", new LoginCommand());
-        commandsMap.put("/logout", new LoginCommand());
+        commandsMap.put("/logout", new LogoutCommand());
         commandsMap.put("/transaction", new TransactionCommand());
     }
 

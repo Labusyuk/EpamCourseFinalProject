@@ -2,7 +2,7 @@ package com.labus.bankpayments.dao;
 
 import com.labus.bankpayments.entity.Payment;
 import com.labus.bankpayments.exception.DaoException;
-import org.apache.log4j.Level;
+import org.apache.log4j.Logger;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -13,14 +13,14 @@ import java.util.List;
 
 public class PaymentDao extends EntityDao<Integer,Payment> {
 
-    private final static String INSERT_PAYMENT= "INSERT INTO bankschema.payments (account_number, to, actions, amount, description, date) VALUES (?, ?, ?, ?, ?, ?)";
+    private final static String INSERT_PAYMENT= "INSERT INTO bankschema.payments (account_number, `to`, actions, amount, description, date) VALUES (?, ?, ?, ?, ?, ?)";
     private final static String SELECT_ALL = "SELECT id, account_number, `to`, actions, amount, description, date FROM bankschema.payments";
     private final static String SELECT_BY_ID = "SELECT id, account_number, `to`, actions, amount, description, date FROM bankschema.payments WHERE id=?";
     private final static String DELETE_BY_ID = "DELETE FROM bankschema.payments WHERE id=?";
     private final static String SELECT_BY_ACCNUMBER = "SELECT id, account_number, `to`, actions, amount, description, `date` FROM bankschema.payments WHERE account_number=? OR `to`=?";
     private final static String SELECT_BY_TO = "SELECT id, account_number, `to`, actions, amount, description, date FROM bankschema.payments WHERE to=?";
 
-
+    private static Logger logger=Logger.getLogger(String.valueOf(PaymentDao.class));
     @Override
     public List<Payment> getAll() throws DaoException {
         List<Payment> payments = new ArrayList<>();
@@ -33,7 +33,7 @@ public class PaymentDao extends EntityDao<Integer,Payment> {
             }
             resultSet.close();
         } catch (SQLException e) {
-            logger.log(Level.ERROR, e.getMessage());
+            logger.error(e.getMessage());
         }finally {
             returnConnection(connection);
         }
@@ -51,7 +51,7 @@ public class PaymentDao extends EntityDao<Integer,Payment> {
             }
             resultSet.close();
         } catch (SQLException e) {
-            logger.log(Level.ERROR, e.getMessage());
+            logger.error(e.getMessage());
         }finally {
             returnConnection(connection);
         }
@@ -71,7 +71,7 @@ public class PaymentDao extends EntityDao<Integer,Payment> {
             }
             resultSet.close();
         } catch (SQLException e) {
-            logger.log(Level.ERROR, e.getMessage());
+            logger.error(e.getMessage());
         }finally {
             returnConnection(connection);
         }
@@ -85,7 +85,7 @@ public class PaymentDao extends EntityDao<Integer,Payment> {
             statement.setInt(1, id);
             statement.executeUpdate();
         } catch (SQLException e) {
-            logger.log(Level.ERROR, e.getMessage());
+            logger.error(e.getMessage());
         }finally {
             returnConnection(connection);
         }
@@ -109,7 +109,7 @@ public class PaymentDao extends EntityDao<Integer,Payment> {
             }
             generatedKey.close();
         } catch (SQLException e) {
-            logger.log(Level.ERROR, e.getMessage());
+            logger.error(e.getMessage());
         }finally {
             returnConnection(connection);
         }
@@ -118,7 +118,7 @@ public class PaymentDao extends EntityDao<Integer,Payment> {
 
     @Override
     public void update(Payment entity) throws DaoException {
-        logger.log(Level.ERROR, "Информацию о платежах запрещенно изменять");
+        logger.error("Error update payment");
     }
 
     @Override
@@ -133,7 +133,7 @@ public class PaymentDao extends EntityDao<Integer,Payment> {
             payment.setDescription(resultSet.getString("description"));
             payment.setDate(resultSet.getDate("date"));
         } catch (SQLException e) {
-            logger.log(Level.ERROR, e.getMessage());
+            logger.error(e.getMessage());
         }
 
         return payment;

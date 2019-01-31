@@ -61,5 +61,5 @@
         <c:forEach var="payment" items="${payments}">
         <li>Перевод ${payment.getAmount()} грн. c карты ${payment.getAccount_number()} ---> на карту ${payment.getTo()}. ${payment.getDescription()}. ${payment.getDate()}</li>
         </c:forEach>
-    </ul><br /><br /></td> <td><div style="text-align: center;"><form action="/pages/transaction" method="post">Перевести <input name="amount" type="text" size="10"> грн. на карту<div></div><input name="account_number" type="text" size="30"><input type="submit" value="Перевести"></form></div></td>  </tr> </tbody></table></body>
+    </ul><br /><br /></td> <td><div style="text-align: center;"><form action="/pages/transaction" method="post">Перевести <input name="amount" type="text" size="10"> грн. на карту<div></div><input name="account_number" type="text" size="30"><input type="submit" value="Перевести"></form></div></td>  </tr> </tbody></table><div style="text-align: center;"><a href="/pages/logout">Сменить пользователя</a></div></body>
 </html>

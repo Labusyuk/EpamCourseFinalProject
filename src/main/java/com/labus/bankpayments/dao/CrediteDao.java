@@ -2,7 +2,7 @@ package com.labus.bankpayments.dao;
 
 import com.labus.bankpayments.entity.Credite;
 import com.labus.bankpayments.exception.DaoException;
-import org.apache.log4j.Level;
+import org.apache.log4j.Logger;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -20,6 +20,7 @@ public class CrediteDao extends EntityDao<Integer, Credite> {
     private final static String UPDATE_DEBT_AMOUNTINTEREST = "UPDATE bankschema.credite SET debt=?, amount_interest=? WHERE account_number=?";
     private final static String SELECT_BY_NUMBER = "SELECT id, account_number, `limit`, debt, amount_interest, rate FROM bankschema.credite WHERE account_number=?";
 
+    private static Logger logger=Logger.getLogger(String.valueOf(CrediteDao.class));
     @Override
     public List<Credite> getAll() throws DaoException {
         List<Credite> credites = new ArrayList<>();
@@ -31,7 +32,7 @@ public class CrediteDao extends EntityDao<Integer, Credite> {
                 credites.add(credite);
             }
         } catch (SQLException e) {
-            logger.log(Level.ERROR, e.getMessage());
+            logger.error(e.getMessage());
         }finally {
             returnConnection(connection);
         }
@@ -49,7 +50,7 @@ public class CrediteDao extends EntityDao<Integer, Credite> {
             }
             resultSet.close();
         } catch (SQLException e) {
-            logger.log(Level.ERROR, e.getMessage());
+            logger.error(e.getMessage());
         }finally {
             returnConnection(connection);
         }
@@ -62,7 +63,7 @@ public class CrediteDao extends EntityDao<Integer, Credite> {
             statement.setInt(1, id);
             statement.executeUpdate();
         } catch (SQLException e) {
-            logger.log(Level.ERROR, e.getMessage());
+            logger.error(e.getMessage());
         }finally {
             returnConnection(connection);
         }
@@ -85,7 +86,7 @@ public class CrediteDao extends EntityDao<Integer, Credite> {
             }
             generatedKey.close();
         } catch (SQLException e) {
-            logger.log(Level.ERROR, e.getMessage());
+            logger.error(e.getMessage());
         }finally {
             returnConnection(connection);
         }
@@ -100,7 +101,7 @@ public class CrediteDao extends EntityDao<Integer, Credite> {
             statement.setString(2, String.valueOf(credite.getAmount_interest()));
             statement.executeUpdate();
         } catch (SQLException e) {
-            logger.log(Level.ERROR, e.getMessage());
+            logger.error(e.getMessage());
         }finally {
             returnConnection(connection);
         }
@@ -115,7 +116,7 @@ public class CrediteDao extends EntityDao<Integer, Credite> {
             }
             resultSet.close();
         } catch (SQLException e) {
-            logger.log(Level.ERROR, e.getMessage());
+            logger.error(e.getMessage());
         }finally {
             returnConnection(connection);
         }
@@ -133,7 +134,7 @@ public class CrediteDao extends EntityDao<Integer, Credite> {
             credite.setAmount_interest(resultSet.getLong("amount_interest"));
             credite.setRate(resultSet.getShort("rate"));
         } catch (SQLException e) {
-            logger.log(Level.ERROR, e.getMessage());
+            logger.error(e.getMessage());
         }
         return credite;
     }
