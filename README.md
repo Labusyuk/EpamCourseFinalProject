@@ -12,5 +12,7 @@
 размера депозита и срока действия.
 
 1.Download and install jdk 1.8, Git, Apache Tomcat, MySQL
+
 2.Clone project: git clone https://github.com/Labusyuk/LabusFinalProject.git
+
 3.Prepare database by running script db.sql
