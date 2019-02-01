@@ -70,6 +70,7 @@ public class PaymentDao extends EntityDao<Integer,Payment> {
                 payments.add(payment);
             }
             resultSet.close();
+            connection.commit();
         } catch (SQLException e) {
             logger.error(e.getMessage());
         }finally {
@@ -108,6 +109,7 @@ public class PaymentDao extends EntityDao<Integer,Payment> {
                 idPayment = generatedKey.getInt(1);
             }
             generatedKey.close();
+            connection.commit();
         } catch (SQLException e) {
             logger.error(e.getMessage());
         }finally {

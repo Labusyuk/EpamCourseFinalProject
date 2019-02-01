@@ -16,11 +16,12 @@ public class CommandFactory {
         commandsMap.put("/admin", new LoginCommand());
         commandsMap.put("/logout", new LogoutCommand());
         commandsMap.put("/transaction", new TransactionCommand());
+        commandsMap.put("/createpending", new CreatePendingApCommand());
+
     }
 
     public static Command defineCommand(HttpServletRequest req) {
         String actionPath = req.getPathInfo();
-        System.out.println("--"+actionPath);
         return commandsMap.get(actionPath);
     }
 }

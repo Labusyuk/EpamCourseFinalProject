@@ -11,7 +11,9 @@ import com.labus.bankpayments.exception.DaoException;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
+import java.math.BigInteger;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.Iterator;
 import java.util.List;
 
@@ -25,14 +27,22 @@ public class UserCommand implements Command {
         } catch (DaoException e) {
             e.printStackTrace();
         }
+        Iterator<Account> accountIter = accounts.iterator();
+        while(accountIter.hasNext()){
+            Account account = accountIter.next();
+            if(account.getType()==1){
+                req.getSession().setAttribute("crediteExist", "true");
+                break;
+            }
+        }
         req.getSession().setAttribute("accounts", accounts);
         numberOfAccount = req.getParameter("numberOfAccount");
         if(numberOfAccount!=null){
-            Iterator<Account> accountIter = accounts.iterator();
+            accountIter = accounts.iterator();
             while (accountIter.hasNext()){
                 Account account = accountIter.next();
                 if(account.getNumber()==Long.parseLong(numberOfAccount)) {
-                    req.setAttribute("selAccount", account);
+                    req.getSession().setAttribute("selAccount", account);
                     req.getSession().setAttribute("selNumberAccount",numberOfAccount);
                     try {
                     switch (account.getType()){

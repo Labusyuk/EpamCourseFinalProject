@@ -115,6 +115,7 @@ public class CrediteDao extends EntityDao<Integer, Credite> {
                 credite = retrieveEntity(resultSet);
             }
             resultSet.close();
+            connection.commit();
         } catch (SQLException e) {
             logger.error(e.getMessage());
         }finally {

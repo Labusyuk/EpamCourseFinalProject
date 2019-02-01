@@ -9,9 +9,11 @@ import org.apache.log4j.Logger;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.math.BigInteger;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 
 public class LoginCommand implements Command{
-    protected static Logger logger=Logger.getLogger("simple");
     @Override
     public String execute(HttpServletRequest req, HttpServletResponse resp) throws CommandException {
         String login = req.getParameter("login");
@@ -19,7 +21,7 @@ public class LoginCommand implements Command{
        if(login == null || password == null) {
            return "login";
        }
-        User user = new UserDao().getByLogAndPass(login, String.valueOf(password.hashCode()));
+        User user = new UserDao().getByLogAndPass(login, md5Custom(password));
         if (user == null ) {
             req.getSession().setAttribute("message", "Неправильный логин или пароль");
             return "default";
@@ -27,7 +29,30 @@ public class LoginCommand implements Command{
         req.getSession().setAttribute("user", user);
         req.getSession().setAttribute("role", user.getRole());
         req.getSession().removeAttribute("message");
-        logger.info("helllo");
         return "user";
+    }
+    public static String md5Custom(String st) {
+        MessageDigest messageDigest = null;
+        byte[] digest = new byte[0];
+
+        try {
+            messageDigest = MessageDigest.getInstance("MD5");
+            messageDigest.reset();
+            messageDigest.update(st.getBytes());
+            digest = messageDigest.digest();
+        } catch (NoSuchAlgorithmException e) {
+            // тут можно обработать ошибку
+            // возникает она если в передаваемый алгоритм в getInstance(,,,) не существует
+            e.printStackTrace();
+        }
+
+        BigInteger bigInt = new BigInteger(1, digest);
+        String md5Hex = bigInt.toString(16);
+
+        while( md5Hex.length() < 32 ){
+            md5Hex = "0" + md5Hex;
+        }
+
+        return md5Hex;
     }
 }

@@ -10,6 +10,7 @@ import com.labus.bankpayments.exception.DaoException;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.sql.Timestamp;
 import java.util.Date;
 import java.util.Iterator;
 
@@ -29,7 +30,7 @@ public class TransactionCommand implements Command{
         accountTo.updateBalance(Long.parseLong(amount));
         new AccountDao().update(accountFrom);
         new AccountDao().update(accountTo);
-        Payment payment = new Payment(0,Long.parseLong(numberOfAccount),Long.parseLong(number), (byte) 1,Long.parseLong(amount),null,new Date());
+        Payment payment = new Payment(0,Long.parseLong(numberOfAccount),Long.parseLong(number), (byte) 1,Long.parseLong(amount),null,new Timestamp(new Date().getTime()));
         new PaymentDao().create(payment);
         } catch (DaoException e) {
             e.printStackTrace();

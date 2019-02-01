@@ -30,6 +30,7 @@ public class PendingApDao extends EntityDao<Integer,PendingAp> {
                 pendingAps.add(pendingAp);
             }
             resultSet.close();
+            connection.commit();
         } catch (SQLException e) {
             logger.error(e.getMessage());
         }finally {
@@ -81,6 +82,7 @@ public class PendingApDao extends EntityDao<Integer,PendingAp> {
                 idPendingAp = generatedKey.getInt(1);
             }
             generatedKey.close();
+            connection.commit();
         } catch (SQLException e) {
             logger.error(e.getMessage());
         }finally {

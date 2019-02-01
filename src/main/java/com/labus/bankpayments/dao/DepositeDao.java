@@ -112,6 +112,7 @@ public class DepositeDao extends EntityDao<Integer,Deposite> {
                 deposite = retrieveEntity(resultSet);
             }
             resultSet.close();
+            connection.commit();
         } catch (SQLException e) {
             logger.error(e.getMessage());
         }finally {

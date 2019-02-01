@@ -24,5 +24,8 @@
     <listener>
         <listener-class>com.labus.bankpayments.listener.Log4jInit</listener-class>
     </listener>
+    <listener>
+        <listener-class>com.labus.bankpayments.listener.SessionListener</listener-class>
+    </listener>
 
 </web-app>

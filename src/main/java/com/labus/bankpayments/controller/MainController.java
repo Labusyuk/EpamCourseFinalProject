@@ -28,10 +28,8 @@ public class MainController extends HttpServlet {
     private void ProcessRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         Command command = CommandFactory.defineCommand(request);
         String result;
-        System.out.println(request.getPathInfo());
         try {
             result = command.execute(request, response);
-            System.out.println(request.getMethod()+"   "+result);
         } catch (CommandException e) {
             throw new ServletException();
         }

@@ -11,6 +11,7 @@ public class LogoutCommand implements Command {
     public String execute(HttpServletRequest req, HttpServletResponse resp) throws CommandException {
         req.getSession().removeAttribute("user");
         req.getSession().removeAttribute("role");
+        req.getSession().removeAttribute("crediteExist");
         return "login";
     }
 }

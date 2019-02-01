@@ -5,7 +5,7 @@
 </head>
 <body>
 <c:if test="${role=='ADMIN'}">
-<p><a href="/admin/">Войти в админ-панель</a><p>
+<p><a href="/pages/admin">Войти в админ-панель</a><p>
     </c:if>
 <div style="text-align: center;"><font size="6" style="font-size: 24pt;">Ваш логин: ${user.getLogin()}</font></div>
 <div style="text-align: center;">Выберите счет</div>
@@ -24,7 +24,11 @@
         </select>
         <div>
             <input type="submit" value="Выбрать">
-    </form></div></div>
+    </form>
+    <form action="/pages/createpending" method="post">
+    <input type="submit" <c:if test="${crediteExist}">disabled</c:if> value="Создать новый кредитный счет">
+    </form>
+</div></div>
 <table border="1" width="70%" cellpadding="5" style=" margin:auto; margin-top: 10px;">
     <tbody><tr>    <th>Общая информация</th>    <th>История платежей</th> <th>Операции</th>   </tr>   <tr>
         <td><div style="text-align: center;">

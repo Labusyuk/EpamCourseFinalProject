@@ -30,6 +30,7 @@ public class AccountDao extends EntityDao<Integer, Account> {
                 accounts.add(account);
             }
             resultSet.close();
+            connection.commit();
         } catch (SQLException e) {
             logger.error(e.getMessage());
         }finally {
@@ -64,6 +65,7 @@ public class AccountDao extends EntityDao<Integer, Account> {
                 account = retrieveEntity(resultSet);
             }
             resultSet.close();
+            connection.commit();
         } catch (SQLException e) {
             logger.error(e.getMessage());
         }finally {
@@ -82,6 +84,7 @@ public class AccountDao extends EntityDao<Integer, Account> {
                 accounts.add(account);
             }
             resultSet.close();
+            connection.commit();
         } catch (SQLException e) {
             logger.error(e.getMessage());
         }finally {
@@ -133,6 +136,7 @@ public class AccountDao extends EntityDao<Integer, Account> {
                 statement.setString(1, String.valueOf(account.getBalance()));
                 statement.setString(2, String.valueOf(account.getNumber()));
                 statement.executeUpdate();
+                connection.commit();
             } catch (SQLException e) {
                 logger.error(e.getMessage());
             } finally {
